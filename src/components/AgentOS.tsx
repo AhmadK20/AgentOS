@@ -11,6 +11,7 @@ import {
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import AgentPresence from './AgentPresence';
+import AgentIcon from './AgentIcon';
 import { api, post } from '../lib/api';
 import type { ActivityEvent, Bootstrap, Conversation, MemoryFile, Profile, Run, Task, Thread, View } from '../lib/types';
 
@@ -34,8 +35,10 @@ function Mark({ small = false }: { small?: boolean }) {
 }
 function Avatar({ profile, size = 'medium' }: { profile?: Profile; size?: 'small' | 'medium' | 'large' }) {
   const id = profile?.id || 'default';
-  const Icon = id === 'sigma' ? Terminal : id === 'fiddle' ? Sparkles : id === 'scout' ? Search : id === 'ledger' ? LayoutGrid : Zap;
-  return <span className={'avatar ' + size} style={{ '--agent-color': profile?.color || '#ed7040' } as CSSProperties}><Icon aria-hidden="true" /></span>;
+  const pet = ({ default: 'hermes', 'hermes-root': 'hermes', fiddle: 'fiddle', ledger: 'ledger', scout: 'scout', sigma: 'sigma' } as Record<string, string>)[id];
+  return <span className={'avatar ' + size + (pet ? ' pixel-pet' : '')} style={{ '--agent-color': profile?.color || '#ed7040' } as CSSProperties}>
+    {pet ? <img src={'/agent-pets/' + pet + '.png'} width={64} height={64} alt="" aria-hidden="true" draggable={false} /> : <AgentIcon identity={id} />}
+  </span>;
 }
 function AgentPicker({ profiles, value, onChange, disabled }: { profiles: Profile[]; value: string; onChange: (id: string) => void; disabled: boolean }) {
   const id = useId();
@@ -331,14 +334,14 @@ export default function AgentOS() {
       <button className="sidebar-search" onClick={() => setSearchOpen(true)}><Search size={16} /><span>Search anything</span><kbd>⌘ K</kbd></button>
       <nav aria-label="Main navigation">{navigation.map(item => <button key={item.id} className={'nav-item ' + (view === item.id ? 'active' : '')} onClick={() => navigate(item.id)}><item.icon size={17} /><span>{item.label}</span>{item.id === 'agents' && <span className="nav-count">{data?.profiles.length || 0}</span>}{item.id === 'tasks' && !!data?.tasks.filter(t => t.status !== 'done').length && <span className="nav-count">{data.tasks.filter(t => t.status !== 'done').length}</span>}{item.id === 'activity' && !!data?.runtime.active && <span className="activity-dot" />}</button>)}</nav>
       <section className="sidebar-provider" aria-labelledby="hermes-section-heading">
-        <div className="provider-heading"><h2 id="hermes-section-heading"><Zap size={14} aria-hidden="true" />Hermes</h2><span className="provider-count">{data?.profiles.length || 0}</span><button className="icon-button" aria-label="View all Hermes agents" onClick={() => navigate('agents')}><MoreHorizontal size={16} /></button></div>
+        <div className="provider-heading"><h2 id="hermes-section-heading"><AgentIcon identity="default" width={14} height={14} />Hermes</h2><span className="provider-count">{data?.profiles.length || 0}</span><button className="icon-button" aria-label="View all Hermes agents" onClick={() => navigate('agents')}><MoreHorizontal size={16} /></button></div>
         <div className="sidebar-agents">{data?.profiles.map(p => <button key={p.id} className="sidebar-agent" onClick={() => startNew(p.id)}><Avatar profile={p} size="small" /><span>{p.name}</span><span className={'agent-presence ' + (data.runs.some(r => r.profile === p.id && running(r.status)) ? 'is-working' : '')} /></button>)}</div>
       </section>
       <section className="sidebar-provider provider-placeholder" aria-labelledby="codex-section-heading">
-        <div className="provider-heading"><h2 id="codex-section-heading"><Terminal size={14} aria-hidden="true" />Codex</h2><span className="provider-status">Not connected</span></div>
+        <div className="provider-heading"><h2 id="codex-section-heading"><AgentIcon identity="codex" width={14} height={14} />Codex</h2><span className="provider-status">Not connected</span></div>
       </section>
       <section className="sidebar-provider provider-placeholder" aria-labelledby="claude-section-heading">
-        <div className="provider-heading"><h2 id="claude-section-heading"><Sparkles size={14} aria-hidden="true" />Claude Code</h2><span className="provider-status">Not connected</span></div>
+        <div className="provider-heading"><h2 id="claude-section-heading"><AgentIcon identity="claude" width={14} height={14} />Claude Code</h2><span className="provider-status">Not connected</span></div>
       </section>
       <div className="sidebar-section-label history-label"><span>RECENT CONVERSATIONS</span><span>{data?.threads.length || 0}</span></div>
       <div className="history-list">{data?.threads.slice(0, 12).map(thread => <button key={thread.id} className={'history-item ' + (threadId === thread.id && view === 'workspace' ? 'selected' : '')} onClick={() => void openThread(thread.id)}><MessageSquare size={13} /><span>{thread.title}</span></button>)}
