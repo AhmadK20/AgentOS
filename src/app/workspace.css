@@ -22,6 +22,19 @@
   background-size: auto, 48px 48px, 48px 48px, auto;
 }
 .sidebar { box-shadow: inset -1px 0 0 var(--glass-edge); }
+.sidebar-provider { margin-top: 20px; }
+.provider-heading { display: flex; align-items: center; gap: 7px; padding: 0 10px 10px; min-height: 28px; }
+.provider-heading h2 { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; font-size: 11px; font-weight: 600; }
+.provider-heading h2 > svg { color: var(--accent); }
+.provider-heading .icon-button { height: 20px; width: 20px; }
+.provider-count { color: var(--muted); font-size: 10px; }
+.sidebar-provider .sidebar-agents { margin-left: 16px; padding-left: 5px; border-left: 1px solid var(--border); }
+.sidebar-provider .sidebar-agent { padding-left: 9px; }
+.provider-placeholder { margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--border); }
+.provider-placeholder .provider-heading { padding-bottom: 2px; }
+.provider-placeholder h2 { color: var(--secondary); }
+.provider-placeholder h2 > svg { color: var(--muted); }
+.provider-status { flex-shrink: 0; color: var(--muted); background: var(--soft); border: 1px solid var(--border); border-radius: 5px; padding: 3px 5px; font-size: 8px; }
 .brand-mark { filter: drop-shadow(0 2px 5px var(--ambient)); }
 .topbar { background: color-mix(in srgb, var(--bg) 76%, transparent); backdrop-filter: blur(18px); }
 .new-chat { border-radius: 11px; box-shadow: var(--panel-shadow); }
