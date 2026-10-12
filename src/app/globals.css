@@ -121,7 +121,6 @@ kbd { font-family: inherit; font-size: 10px; color: var(--muted); border: 1px so
 .composer-options { display: flex; align-items: center; gap: 15px; min-width: 0; }
 .agent-select { display: flex; align-items: center; gap: 6px; padding: 4px 7px; background: var(--soft); border-radius: 6px; }
 .agent-select .avatar { height: 19px; width: 19px; border: 0; border-radius: 4px; }
-.agent-select select { background: transparent; border: 0; appearance: none; color: var(--secondary); outline: none; font-size: 10px; font-weight: 550; max-width: 120px; cursor: pointer; }
 select option { background: var(--surface); color: var(--text); }
 .agent-select > svg { color: var(--muted); }
 .composer-tool, .composer-agent { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 10px; }

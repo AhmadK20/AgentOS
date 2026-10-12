@@ -1,6 +1,7 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import {
   ArrowRight, ArrowUp, AudioLines, BookOpen, Check, CheckCheck, ChevronDown, ChevronRight,
   Circle, CircleCheck, Command, Copy, Cpu, ExternalLink, FolderOpen, LayoutGrid, ListTodo,
@@ -35,6 +36,101 @@ function Avatar({ profile, size = 'medium' }: { profile?: Profile; size?: 'small
   const id = profile?.id || 'default';
   const Icon = id === 'sigma' ? Terminal : id === 'fiddle' ? Sparkles : id === 'scout' ? Search : id === 'ledger' ? LayoutGrid : Zap;
   return <span className={'avatar ' + size} style={{ '--agent-color': profile?.color || '#ed7040' } as CSSProperties}><Icon aria-hidden="true" /></span>;
+}
+function AgentPicker({ profiles, value, onChange, disabled }: { profiles: Profile[]; value: string; onChange: (id: string) => void; disabled: boolean }) {
+  const id = useId();
+  const trigger = useRef<HTMLButtonElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  const search = useRef({ text: '', time: 0 });
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(0);
+  const [position, setPosition] = useState<CSSProperties>({ visibility: 'hidden' });
+  const selected = profiles.find(p => p.id === value);
+  const reveal = () => { setActive(Math.max(0, profiles.findIndex(p => p.id === value))); search.current.text = ''; setOpen(true); };
+  const choose = (index: number) => { if (profiles[index]) onChange(profiles[index].id); setOpen(false); trigger.current?.focus(); };
+
+  useLayoutEffect(() => {
+    if (!open) return;
+    const place = () => {
+      if (!trigger.current || !panel.current) return;
+      const rect = trigger.current.getBoundingClientRect();
+      const viewport = window.visualViewport;
+      const left = viewport?.offsetLeft || 0, top = viewport?.offsetTop || 0;
+      const width = viewport?.width || window.innerWidth, height = viewport?.height || window.innerHeight;
+      if (rect.bottom < top || rect.top > top + height) { setOpen(false); return; }
+      const above = rect.top - top - 20, below = top + height - rect.bottom - 20;
+      const sections = Array.from(panel.current.children) as HTMLElement[];
+      const desired = Math.min(408, sections.reduce((height, section) => height + section.scrollHeight, 0) + 22);
+      const upwards = below < desired && above > below;
+      const available = Math.max(0, upwards ? above : below);
+      const menuHeight = Math.min(desired, available);
+      const menuWidth = Math.min(292, width - 24);
+      setPosition({ width: menuWidth, left: Math.max(left + 12, Math.min(rect.left, left + width - menuWidth - 12)),
+        top: upwards ? rect.top - 8 - menuHeight : rect.bottom + 8, maxHeight: menuHeight, visibility: 'visible' });
+    };
+    place();
+    const dismiss = (event: PointerEvent) => {
+      if (!trigger.current?.contains(event.target as Node) && !panel.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener('pointerdown', dismiss);
+    window.addEventListener('resize', place);
+    // Internal list scrolling must not reposition the popup.
+    const scroll = (event: Event) => { if (!panel.current?.contains(event.target as Node)) place(); };
+    window.addEventListener('scroll', scroll, true);
+    window.visualViewport?.addEventListener('resize', place);
+    window.visualViewport?.addEventListener('scroll', place);
+    return () => {
+      document.removeEventListener('pointerdown', dismiss);
+      window.removeEventListener('resize', place);
+      window.removeEventListener('scroll', scroll, true);
+      window.visualViewport?.removeEventListener('resize', place);
+      window.visualViewport?.removeEventListener('scroll', place);
+    };
+  }, [open, profiles.length]);
+  useEffect(() => {
+    if (open) document.getElementById(id + '-option-' + active)?.scrollIntoView({ block: 'nearest' });
+  }, [active, open, id]);
+
+  return <>
+    <button ref={trigger} type="button" className="agent-select" role="combobox" aria-label="Choose an agent" aria-describedby={id + '-value'}
+      aria-expanded={open} aria-haspopup="listbox" aria-controls={open ? id : undefined}
+      aria-activedescendant={open ? id + '-option-' + active : undefined} disabled={disabled || !profiles.length}
+      onClick={() => open ? setOpen(false) : reveal()} onBlur={() => setOpen(false)}
+      onKeyDown={event => {
+        if (event.key === 'Tab') { setOpen(false); return; }
+        if (event.key === 'Escape' && open) { event.preventDefault(); event.stopPropagation(); setOpen(false); return; }
+        if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
+          event.preventDefault();
+          if (!open) reveal();
+          if (event.key === 'Home') setActive(0);
+          else if (event.key === 'End') setActive(profiles.length - 1);
+          else if (open) setActive(index => Math.max(0, Math.min(profiles.length - 1, index + (event.key === 'ArrowDown' ? 1 : -1))));
+        } else if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault(); if (open) choose(active); else reveal();
+        } else if (event.key.length === 1 && !event.metaKey && !event.ctrlKey && !event.altKey) {
+          event.preventDefault();
+          if (!open) reveal();
+          const now = Date.now();
+          search.current = { text: (now - search.current.time < 700 ? search.current.text : '') + event.key.toLowerCase(), time: now };
+          const match = profiles.findIndex(p => p.name.toLowerCase().startsWith(search.current.text));
+          if (match >= 0) setActive(match);
+        }
+      }}>
+      <Avatar profile={selected} size="small" /><span id={id + '-value'}>{selected?.name || 'Choose agent'}</span><ChevronDown size={13} aria-hidden="true" />
+    </button>
+    {open && createPortal(<div ref={panel} className="agent-picker" style={position} onPointerDown={event => event.preventDefault()}>
+      <div className="agent-picker-heading"><span>Choose an agent</span><span>{profiles.length} available</span></div>
+      <div id={id} role="listbox" aria-label="Your agents" className="agent-picker-list">
+        {profiles.map((p, index) => <div key={p.id} id={id + '-option-' + index} role="option" aria-selected={p.id === value}
+          className={'agent-picker-option' + (index === active ? ' is-focused' : '')}
+          onPointerMove={() => setActive(index)} onClick={() => choose(index)}>
+          <Avatar profile={p} /><span className="agent-picker-identity"><strong>{p.name}</strong><span>{roleFor(p.id)}<i aria-hidden="true">·</i>{p.skills} skills</span></span>
+          {p.id === value && <span className="agent-picker-check"><Check size={14} aria-hidden="true" /></span>}
+        </div>)}
+      </div>
+      <div className="agent-picker-footer"><span className="agent-picker-dot" />Your Hermes team</div>
+    </div>, document.body)}
+  </>;
 }
 function Status({ status }: { status: string }) {
   return <span className={'status ' + status}>
@@ -219,7 +315,7 @@ export default function AgentOS() {
       disabled={busy || !!activeRun || !profile}
       onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); void send(); } }} />
     <div className="composer-toolbar"><div className="composer-options">
-      {!threadId && <label className="agent-select"><Avatar profile={profile} size="small" /><select aria-label="Choose an agent" value={profileId} onChange={event => setProfileId(event.target.value)}>{data?.profiles.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}</select><ChevronDown size={13} /></label>}
+      {!threadId && <AgentPicker profiles={data?.profiles || []} value={profileId} onChange={setProfileId} disabled={busy} />}
       {threadId && <span className="composer-agent"><Avatar profile={profile} size="small" />{profile?.name}</span>}
       <button type="button" className="composer-tool" onClick={() => setDetail(profile || null)} disabled={!profile}><Settings2 size={14} /><span>Agent details</span></button>
     </div>{activeRun ? <button type="button" className="send-button stop" aria-label="Stop agent" onClick={() => void act(() => post('/runs/' + activeRun.id + '/cancel'))}><Square size={14} fill="currentColor" /></button>
