@@ -88,7 +88,7 @@ Task assignment executes a selected agent; it is not an automatic multi-agent pl
 
 ## Design references
 
-The interface uses Mistral AI references retrieved through the **official Mobbin MCP server** using the existing Fiddle profile's Mobbin connection. See [docs/design-references.md](docs/design-references.md) for the source screens and adaptations. Reference images, credentials, runtime files, and private memory are excluded from the repository.
+The interface uses Mistral AI layout references plus Higgsfield, ElevenLabs, and Lovable visual references retrieved through the **official Mobbin MCP server** using the existing Fiddle profile's Mobbin connection. Its warm glass surfaces and original holographic sphere preserve the ivory, orange, and dark-mode palette, with support for reduced motion. See [docs/design-references.md](docs/design-references.md) for the source screens and adaptations. Reference images, credentials, runtime files, and private memory are excluded from the repository.
 
 ## Verification
 

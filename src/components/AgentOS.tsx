@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import AgentPresence from './AgentPresence';
 import { api, post } from '../lib/api';
 import type { ActivityEvent, Bootstrap, Conversation, MemoryFile, Profile, Run, Task, Thread, View } from '../lib/types';
 
@@ -249,9 +250,12 @@ export default function AgentOS() {
       {error && <div className="error-banner" role="alert"><span>{error}</span><button className="icon-button" aria-label="Dismiss error" onClick={() => setError('')}><X size={15} /></button></div>}
       {!data ? <div className="loading-screen"><Mark /><LoaderCircle className="spin" size={20} /><p>Gathering your agents…</p>{error && <button className="button" onClick={() => void reload().catch(err => setError(err.message))}>Try again</button>}</div> : <>
       {view === 'workspace' && !threadId && <div className="welcome-view">
-        <div className="welcome-content"><div className="welcome-eyebrow"><span className="tiny-star">✳</span> A LITTLE DIRECTION. A LOT OF POSSIBILITY.</div>
+        <div className="welcome-content"><div className="welcome-hero"><div className="welcome-copy"><div className="welcome-eyebrow"><span className="tiny-star">✳</span> A LITTLE DIRECTION. A LOT OF POSSIBILITY.</div>
           <h1>Big ideas.<br /><span>Meet your team.</span></h1><p className="welcome-description">Your Hermes agents, together in one place.<br />Think it. Delegate it. Make it happen.</p>
-          <div className="team-row">{data.profiles.filter(p => p.id !== 'default').map(p => <button key={p.id} className={'team-member ' + (profileId === p.id ? 'chosen' : '')} onClick={() => setProfileId(p.id)}><Avatar profile={p} size="large" /><span>{p.name}</span><small>{roleFor(p.id)}</small></button>)}</div>
+          <div className="workspace-signal"><span className={'connection-dot ' + (connected ? 'online' : '')} />{connected ? 'Connected to Hermes' : 'Reconnecting to Hermes'}<span className="signal-divider" />{data.runtime.active} working</div></div>
+          <div className="presence-display"><AgentPresence /><div className="presence-caption" aria-live="polite"><span>{profile?.name || 'Your workspace'}</span><small>{profile ? roleFor(profile.id) + ' · ' + profile.skills + ' skills' : 'Select an agent to begin'}</small></div></div></div>
+          <div className="team-heading"><span>YOUR TEAM</span><span>Choose who to work with</span></div>
+          <div className="team-row">{data.profiles.map(p => <button key={p.id} aria-pressed={profileId === p.id} className={'team-member ' + (profileId === p.id ? 'chosen' : '')} onClick={() => setProfileId(p.id)}><Avatar profile={p} size="large" /><span>{p.name}</span><small>{roleFor(p.id)}</small></button>)}</div>
           {composer}<div className="composer-note"><ShieldCheck size={12} />Your agents. Your tools. Your existing Hermes setup.<span>↵ to send</span></div>
           <div className="suggestion-grid">{[
             { id: 'sigma', icon: Terminal, title: 'Build something', text: 'Turn an idea into working code', prompt: 'Help me turn an idea into a working project. First, ask me about the goal and requirements.' },
