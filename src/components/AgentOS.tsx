@@ -327,6 +327,7 @@ export default function AgentOS() {
     <aside className="sidebar">
       <button className="brand" onClick={() => startNew()} aria-label="AgentOS home"><Mark /><span>agent<span className="brand-os">os</span><span className="beta">BETA</span></span></button>
       <button className="new-chat" onClick={() => startNew()} aria-label="New conversation"><Plus size={17} /><span>New conversation</span><span className="shortcut" aria-hidden="true">↗</span></button>
+      <div className="sidebar-scroll">
       <button className="sidebar-search" onClick={() => setSearchOpen(true)}><Search size={16} /><span>Search anything</span><kbd>⌘ K</kbd></button>
       <nav aria-label="Main navigation">{navigation.map(item => <button key={item.id} className={'nav-item ' + (view === item.id ? 'active' : '')} onClick={() => navigate(item.id)}><item.icon size={17} /><span>{item.label}</span>{item.id === 'agents' && <span className="nav-count">{data?.profiles.length || 0}</span>}{item.id === 'tasks' && !!data?.tasks.filter(t => t.status !== 'done').length && <span className="nav-count">{data.tasks.filter(t => t.status !== 'done').length}</span>}{item.id === 'activity' && !!data?.runtime.active && <span className="activity-dot" />}</button>)}</nav>
       <div className="sidebar-section-label"><span>YOUR TEAM</span><button className="icon-button" aria-label="View all agents" onClick={() => navigate('agents')}><MoreHorizontal size={16} /></button></div>
@@ -334,6 +335,7 @@ export default function AgentOS() {
       <div className="sidebar-section-label history-label"><span>RECENT CONVERSATIONS</span><span>{data?.threads.length || 0}</span></div>
       <div className="history-list">{data?.threads.slice(0, 12).map(thread => <button key={thread.id} className={'history-item ' + (threadId === thread.id && view === 'workspace' ? 'selected' : '')} onClick={() => void openThread(thread.id)}><MessageSquare size={13} /><span>{thread.title}</span></button>)}
         {!data?.threads.length && <p className="history-empty">A fresh start.<br />Your conversations will live here.</p>}</div>
+      </div>
       <div className="sidebar-bottom"><div className="runtime-card"><span className={'connection-dot ' + (connected ? 'online' : '')} /><div><strong>{connected ? 'Hermes connected' : data ? 'Reconnecting…' : 'Connecting…'}</strong><span>{data ? data.runtime.active + ' working · ' + data.profiles.length + ' profiles' : 'Your own agent runtime'}</span></div><ShieldCheck size={16} /></div>
         <button className={'nav-item settings-nav ' + (view === 'settings' ? 'active' : '')} onClick={() => navigate('settings')}><Settings2 size={17} /><span>Settings</span><ChevronRight size={14} /></button>
         <div className="owner"><span className="owner-avatar">A</span><div><strong>Personal workspace</strong><span>Local · yours to control</span></div><button className="icon-button" onClick={() => setDark(!dark)} aria-label={dark ? 'Use light theme' : 'Use dark theme'}>{dark ? <Sun size={16} /> : <Moon size={16} />}</button></div>

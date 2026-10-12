@@ -27,7 +27,10 @@ h1, h2, h3, p { margin: 0; }
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
 .app-shell { display: flex; height: 100dvh; min-height: 600px; overflow: hidden; }
-.sidebar { width: 252px; flex: 0 0 252px; display: flex; flex-direction: column; padding: 29px 17px 0; background: var(--sidebar); border-right: 1px solid var(--border); overflow: auto; z-index: 30; }
+.sidebar { width: 252px; flex: 0 0 252px; display: flex; flex-direction: column; padding: 29px 17px 0; background: var(--sidebar); border-right: 1px solid var(--border); overflow: hidden; z-index: 30; }
+.sidebar > * { flex-shrink: 0; }
+.sidebar-scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; padding: 4px; margin: 0 -4px; }
+.sidebar-scroll > * { flex-shrink: 0; }
 .brand { display: flex; align-items: center; gap: 11px; padding: 0 11px; margin-bottom: 28px; text-align: left; font-family: 'Manrope', sans-serif; font-size: 26px; font-weight: 750; letter-spacing: -1.3px; }
 .brand > span:last-child { display: flex; align-items: center; }
 .brand-os { font-weight: 500; color: var(--secondary); }
@@ -62,13 +65,13 @@ kbd { font-family: inherit; font-size: 10px; color: var(--muted); border: 1px so
 .agent-presence.is-working { background: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); animation: pulse 1.5s infinite; }
 .history-label { padding-top: 27px; letter-spacing: .9px; }
 .history-label > span:last-child { font-size: 10px; }
-.history-list { min-height: 42px; flex: 1; padding-bottom: 22px; }
+.history-list { min-height: 42px; flex: 1 0 auto; padding-bottom: 22px; }
 .history-item { display: flex; align-items: center; gap: 9px; text-align: left; width: 100%; color: var(--secondary); font-size: 11px; padding: 9px 12px; border-radius: 6px; }
 .history-item span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .history-item svg { color: var(--muted); }
 .history-item.selected { background: var(--sidebar-hover); color: var(--text); }
 .history-empty { font-size: 11px; line-height: 1.9; color: var(--muted); padding: 8px 12px; }
-.sidebar-bottom { margin-top: auto; padding-top: 7px; }
+.sidebar-bottom { padding-top: 12px; border-top: 1px solid var(--border); }
 .runtime-card { display: flex; align-items: center; gap: 9px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; }
 .connection-dot { width: 6px; height: 6px; flex-shrink: 0; border-radius: 50%; background: var(--muted); display: inline-block; }
 .connection-dot.online { background: #7d9b75; }
