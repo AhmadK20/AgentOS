@@ -294,10 +294,10 @@ select option { background: var(--surface); color: var(--text); }
 .memory-document > .markdown { padding: 27px 30px; font-size: 12px; }
 .inline-loading { display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--muted); font-size: 11px; padding: 65px 20px; }
 .settings-content { padding-right: max(48px, calc((100vw - 950px) / 2)); }
-.settings-section { margin: 0 0 32px; border-bottom: 1px solid var(--border); padding: 0 0 30px; }
+.settings-section { margin: 0 0 32px; border: 1px solid var(--border); padding: 24px; }
 .settings-section h2 { font-size: 14px; font-weight: 550; margin-bottom: 8px; }
 .settings-section > p { font-size: 11px; color: var(--muted); line-height: 1.8; margin-bottom: 20px; }
-.theme-options { display: flex; gap: 12px; }
+.theme-options { display: flex; flex-wrap: wrap; gap: 12px; }
 .theme-options button { display: flex; align-items: center; gap: 12px; border: 1px solid var(--border); padding: 15px 17px; background: var(--surface); border-radius: 8px; width: 155px; text-align: left; font-size: 11px; }
 .theme-options button > svg:last-child { margin-left: auto; opacity: 0; color: var(--accent); }
 .theme-options button.selected { border-color: var(--accent); }.theme-options button.selected > svg:last-child { opacity: 1; }
@@ -406,6 +406,7 @@ dt { color: var(--muted); }dd { margin: 0; display: flex; align-items: center; g
   .conversation-composer { width: calc(100% - 32px); padding-bottom: 9px; }
   .activity-panel { position: absolute; inset: 56px 0 0 auto; width: min(320px, 86vw); z-index: 20; box-shadow: -10px 0 40px #00000010; }
   .connection-list > div { flex-wrap: wrap; }.connection-list > div > div { flex-basis: 100%; padding-left: 33px; }.settings-list > div { flex-direction: column; gap: 7px; }.settings-list dd { text-align: left; }
+  .settings-section { padding: 18px; }
   .modal-backdrop { padding: 14px; }.modal { border-radius: 12px; }.modal-header { padding: 17px 20px; }.task-form { padding: 20px; }.modal-footer { gap: 7px; }.modal-footer .button { padding: 9px 11px; font-size: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
