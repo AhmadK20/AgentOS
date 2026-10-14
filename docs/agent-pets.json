@@ -1,0 +1,39 @@
+{
+  "generator": "Built-in image_gen tool",
+  "transparentBackground": true,
+  "palette": [
+    "#e7663b",
+    "#f18a60",
+    "#eeeae0",
+    "#252723",
+    "#73796b",
+    "#9d633e"
+  ],
+  "avatars": [
+    {
+      "id": "hermes",
+      "prompt": "Use case: stylized-concept. Asset type: one tiny pixel-art PET avatar for an AgentOS dashboard. Draw exactly ONE animal pet sprite, centered in a square canvas with a genuinely transparent background. TRUE low-resolution pixel art: design it as a 32 by 32 pixel game sprite, then enlarge with nearest-neighbor integer scaling. Clearly visible square pixels, hard stair-step silhouettes, flat limited-color shading, no anti-aliasing, no gradients, no blur, no 3D, no illustration brushwork, no realistic textures, no human characters. Cute compact proportions, huge expressive simple pixel eyes, large head, tiny body and paws, three-quarter front pose. Full pet entirely visible with 8% transparent padding; pet fills 84% of the canvas. Use only a small coordinated palette: terracotta orange #e7663b and #f18a60, ivory #eeeae0, warm charcoal #252723, olive-gray #73796b, muted warm brown #9d633e. Crisp dark outline suitable for ivory AND dark UI backgrounds. No cyan, purple or blue, no text or labels, no watermark, no scenery, no other pets. Each sprite should look from the same polished retro game family.\nSubject: Hermes is a tiny orange FOX messenger pet with large pointed ears, an ivory chest and ivory tail tip, a small ivory wing on each shoulder, and a tiny dark olive messenger satchel. Friendly lively pixel eyes. The fox must remain recognizable at 24 pixels.",
+      "file": "public/agent-pets/hermes.png"
+    },
+    {
+      "id": "fiddle",
+      "prompt": "Use case: stylized-concept. Asset type: one tiny pixel-art PET avatar for an AgentOS dashboard. Draw exactly ONE animal pet sprite, centered in a square canvas with a genuinely transparent background. TRUE low-resolution pixel art: design it as a 32 by 32 pixel game sprite, then enlarge with nearest-neighbor integer scaling. Clearly visible square pixels, hard stair-step silhouettes, flat limited-color shading, no anti-aliasing, no gradients, no blur, no 3D, no illustration brushwork, no realistic textures, no human characters. Cute compact proportions, huge expressive simple pixel eyes, large head, tiny body and paws, three-quarter front pose. Full pet entirely visible with 8% transparent padding; pet fills 84% of the canvas. Use only a small coordinated palette: terracotta orange #e7663b and #f18a60, ivory #eeeae0, warm charcoal #252723, olive-gray #73796b, muted warm brown #9d633e. Crisp dark outline suitable for ivory AND dark UI backgrounds. No cyan, purple or blue, no text or labels, no watermark, no scenery, no other pets. Each sprite should look from the same polished retro game family.\nSubject: Fiddle is a tiny ivory CAT designer pet with terracotta-orange patches on its ears and tail, a small orange artist beret, a little dark olive brush held beside its paw. Friendly playful pixel eyes. The cat must remain recognizable at 24 pixels.",
+      "file": "public/agent-pets/fiddle.png"
+    },
+    {
+      "id": "ledger",
+      "prompt": "Use case: stylized-concept. Asset type: one tiny pixel-art PET avatar for an AgentOS dashboard. Draw exactly ONE animal pet sprite, centered in a square canvas with a genuinely transparent background. TRUE low-resolution pixel art: design it as a 32 by 32 pixel game sprite, then enlarge with nearest-neighbor integer scaling. Clearly visible square pixels, hard stair-step silhouettes, flat limited-color shading, no anti-aliasing, no gradients, no blur, no 3D, no illustration brushwork, no realistic textures, no human characters. Cute compact proportions, huge expressive simple pixel eyes, large head, tiny body and paws, three-quarter front pose. Full pet entirely visible with 8% transparent padding; pet fills 84% of the canvas. Use only a small coordinated palette: terracotta orange #e7663b and #f18a60, ivory #eeeae0, warm charcoal #252723, olive-gray #73796b, muted warm brown #9d633e. Crisp dark outline suitable for ivory AND dark UI backgrounds. No cyan, purple or blue, no text or labels, no watermark, no scenery, no other pets. Each sprite should look from the same polished retro game family.\nSubject: Ledger is a tiny warm-brown OWL analyst pet with a round head, large ivory face circles, square dark spectacles, terracotta chest accents and tiny folded wings. Calm wise expression. The owl must remain recognizable at 24 pixels.",
+      "file": "public/agent-pets/ledger.png"
+    },
+    {
+      "id": "scout",
+      "prompt": "Use case: stylized-concept. Asset type: one tiny pixel-art PET avatar for an AgentOS dashboard. Draw exactly ONE animal pet sprite, centered in a square canvas with a genuinely transparent background. TRUE low-resolution pixel art: design it as a 32 by 32 pixel game sprite, then enlarge with nearest-neighbor integer scaling. Clearly visible square pixels, hard stair-step silhouettes, flat limited-color shading, no anti-aliasing, no gradients, no blur, no 3D, no illustration brushwork, no realistic textures, no human characters. Cute compact proportions, huge expressive simple pixel eyes, large head, tiny body and paws, three-quarter front pose. Full pet entirely visible with 8% transparent padding; pet fills 84% of the canvas. Use only a small coordinated palette: terracotta orange #e7663b and #f18a60, ivory #eeeae0, warm charcoal #252723, olive-gray #73796b, muted warm brown #9d633e. Crisp dark outline suitable for ivory AND dark UI backgrounds. No cyan, purple or blue, no text or labels, no watermark, no scenery, no other pets. Each sprite should look from the same polished retro game family.\nSubject: Scout is a tiny charcoal and ivory RACCOON explorer pet with a clear dark eye mask and banded tail, a small olive hood with terracotta lining and a tiny orange backpack. Curious bright pixel eyes. The raccoon must remain recognizable at 24 pixels.",
+      "file": "public/agent-pets/scout.png"
+    },
+    {
+      "id": "sigma",
+      "prompt": "Use case: stylized-concept. Asset type: one tiny pixel-art PET avatar for an AgentOS dashboard. Draw exactly ONE animal pet sprite, centered in a square canvas with a genuinely transparent background. TRUE low-resolution pixel art: design it as a 32 by 32 pixel game sprite, then enlarge with nearest-neighbor integer scaling. Clearly visible square pixels, hard stair-step silhouettes, flat limited-color shading, no anti-aliasing, no gradients, no blur, no 3D, no illustration brushwork, no realistic textures, no human characters. Cute compact proportions, huge expressive simple pixel eyes, large head, tiny body and paws, three-quarter front pose. Full pet entirely visible with 8% transparent padding; pet fills 84% of the canvas. Use only a small coordinated palette: terracotta orange #e7663b and #f18a60, ivory #eeeae0, warm charcoal #252723, olive-gray #73796b, muted warm brown #9d633e. Crisp dark outline suitable for ivory AND dark UI backgrounds. No cyan, purple or blue, no text or labels, no watermark, no scenery, no other pets. Each sprite should look from the same polished retro game family.\nSubject: Sigma is a tiny ivory ROBOT DOG engineer pet with a square rounded pixel head, two floppy segmented charcoal ears, two simple amber-orange LED eyes, orange side panels and small mechanical paws. Friendly expression. The robot dog must remain recognizable at 24 pixels.",
+      "file": "public/agent-pets/sigma.png"
+    }
+  ]
+}
